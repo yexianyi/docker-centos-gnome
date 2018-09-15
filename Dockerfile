@@ -5,7 +5,7 @@ RUN yum groupinstall "GNOME Desktop" "Graphical Administration Tools" -y \
     && sed -i 's/\/home\/<USER>/\/root/g' /etc/systemd/system/vncserver@:1.service \
     && sed -i 's/<USER>/root/g' /etc/systemd/system/vncserver@:1.service \
     #config VNC
-    && sh -c '/bin/echo -e "\n123456\n\n123456" | vncpasswd' \
+    && sh -c '/bin/echo -e "\n123456\n123456\nn\n" | vncpasswd' \
     && sed -i 's/800x600/1600x900/g' /usr/bin/vncserver \
     && sed -i 's/#$depth = 16/$depth = 32/g' /usr/bin/vncserver \
     
