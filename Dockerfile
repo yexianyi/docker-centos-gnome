@@ -5,7 +5,7 @@ FROM yexianyi/oracle-jdk:centos7
     && sed -i 's/\/home\/<USER>/\/root/g' /etc/systemd/system/vncserver@:1.service \
     && sed -i 's/<USER>/root/g' /etc/systemd/system/vncserver@:1.service \
     #config VNC
-    && sh -c '/bin/echo -e "123456\n123456\nn\n" | vncpasswd' \
+    #&& sh -c '/bin/echo -e "123456\n123456\nn\n" | vncpasswd' \
     && sed -i 's/800x600/1600x900/g' /usr/bin/vncserver \
     && sed -i 's/#$depth = 16/$depth = 32/g' /usr/bin/vncserver \
     
@@ -13,4 +13,4 @@ FROM yexianyi/oracle-jdk:centos7
     && systemctl stop firewalld \
 
 EXPOSE 5901 5902 5903 5904 5905 5906
-CMD /usr/sbin/init && systemctl start vncserver@:1.service
+CMD /usr/sbin/init && sh -c '/bin/echo -e "123456\n123456\nn\n" | vncpasswd' && systemctl start vncserver@:1.service
