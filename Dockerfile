@@ -9,10 +9,6 @@ RUN yum -y install tigervnc-server \
     && sed -i 's/#$depth = 16/$depth = 32/g' /usr/bin/vncserver \
     && sh -c "yes 123456| vncpasswd" && echo "root:123456" | chpasswd \
     
-    && systemctl daemon-reload \
-    && systemctl stop firewalld 
-    #&& systemctl start vncserver@:1.service
-
 EXPOSE 5901 5902 5903 5904 5905 5906
 VOLUME [ "/sys/fs/cgroup" ]
-CMD ["/usr/sbin/init"]
+CMD systemctl daemon-reload && systemctl stop firewalld && systemctl start vncserver@:1.service
