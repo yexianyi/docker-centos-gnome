@@ -1,6 +1,6 @@
 FROM yexianyi/oracle-jdk:centos7
-#RUN yum groupinstall "GNOME Desktop" "Graphical Administration Tools" -y \
-    RUN yum -y install tigervnc-server \
+RUN yum groupinstall "GNOME Desktop" "Graphical Administration Tools" -y \
+    && yum -y install tigervnc-server \
     && cp /lib/systemd/system/vncserver@.service /etc/systemd/system/vncserver@:1.service \
     && sed -i 's/\/home\/<USER>/\/root/g' /etc/systemd/system/vncserver@:1.service \
     && sed -i 's/<USER>/root/g' /etc/systemd/system/vncserver@:1.service \
@@ -11,6 +11,7 @@ FROM yexianyi/oracle-jdk:centos7
     
     && systemctl daemon-reload \
     && systemctl stop firewalld \
+    #&& systemctl start vncserver@:1.service
 
 EXPOSE 5901 5902 5903 5904 5905 5906
-CMD /usr/sbin/init && sh -c '/bin/echo -e "123456\n123456\nn\n" | vncpasswd' && systemctl start vncserver@:1.service
+CMD /usr/sbin/init
