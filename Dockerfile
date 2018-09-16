@@ -1,7 +1,7 @@
 FROM yexianyi/oracle-jdk:centos7
 
-#RUN yum groupinstall "GNOME Desktop" "Graphical Administration Tools" -y \
-RUN yum -y install tigervnc-server \
+RUN yum groupinstall "GNOME Desktop" "Graphical Administration Tools" -y \
+    && yum -y install tigervnc-server \
     && cp /lib/systemd/system/vncserver@.service /etc/systemd/system/vncserver@:1.service \
     && sed -i 's/\/home\/<USER>/\/root/g' /etc/systemd/system/vncserver@:1.service \
     && sed -i 's/<USER>/root/g' /etc/systemd/system/vncserver@:1.service \
