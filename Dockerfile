@@ -11,4 +11,5 @@ RUN yum groupinstall "GNOME Desktop" "Graphical Administration Tools" -y \
     
 EXPOSE 5901 5902 5903 5904 5905 5906
 VOLUME [ "/sys/fs/cgroup" ]
-CMD /usr/sbin/init && systemctl daemon-reload && systemctl stop firewalld && systemctl start vncserver@:1.service
+ENTRYPOINT ["/usr/sbin/init"]
+CMD systemctl daemon-reload && systemctl stop firewalld && systemctl start vncserver@:1.service
