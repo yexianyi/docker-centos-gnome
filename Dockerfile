@@ -5,7 +5,6 @@ RUN echo 'LANG="en_US.UTF-8"' >> /etc/environment \
     && source /etc/environment \
     && echo 'LANG="en_US.UTF-8"' >> /etc/sysconfig/i18n \
     && echo 'SYSFONT="latarcyrheb-sun16"' >> /etc/sysconfig/i18n \
-    && localedef -v -c -i en_US -f UTF-8 en_US.UTF-8 \
     #install gnome desktop
     && yum groupinstall "GNOME Desktop" "Graphical Administration Tools" -y \
     && yum -y install tigervnc-server \
@@ -19,4 +18,4 @@ RUN echo 'LANG="en_US.UTF-8"' >> /etc/environment \
 EXPOSE 5901 5902 5903 5904 5905 5906
 VOLUME [ "/sys/fs/cgroup" ]
 ENTRYPOINT ["/usr/sbin/init"]
-CMD systemctl daemon-reload && systemctl stop firewalld && systemctl start vncserver@:1.service
+CMD localedef -v -c -i en_US -f UTF-8 en_US.UTF-8 && systemctl daemon-reload && systemctl stop firewalld && systemctl start vncserver@:1.service
