@@ -1,10 +1,12 @@
 FROM yexianyi/oracle-jdk:centos7
 
+COPY init.sh init.sh
 RUN echo 'LANG="en_US.UTF-8"' >> /etc/environment \
     && echo 'LC_ALL=' >> /etc/environment \
     && source /etc/environment \
     && echo 'LANG="en_US.UTF-8"' >> /etc/sysconfig/i18n \
     && echo 'SYSFONT="latarcyrheb-sun16"' >> /etc/sysconfig/i18n \
+    && chmod +x init.sh \
     #install gnome desktop
     && yum groupinstall "GNOME Desktop" "Graphical Administration Tools" -y \
     && yum -y install tigervnc-server \
@@ -14,7 +16,6 @@ RUN echo 'LANG="en_US.UTF-8"' >> /etc/environment \
     && sed -i 's/800x600/1920x1080/g' /usr/bin/vncserver \
     && sed -i 's/#$depth = 16/$depth = 32/g' /usr/bin/vncserver \
     && sh -c "yes 123456| vncpasswd" && echo "root:123456" | chpasswd
-COPY init.sh .
     
 EXPOSE 5901 5902 5903 5904 5905 5906
 VOLUME [ "/sys/fs/cgroup" ]
