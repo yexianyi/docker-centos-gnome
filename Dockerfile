@@ -1,6 +1,6 @@
 FROM yexianyi/oracle-jdk:centos7
 
-COPY init.sh init.sh
+ADD init.sh init.sh
 RUN echo 'LANG="en_US.UTF-8"' >> /etc/environment \
     && echo 'LC_ALL=' >> /etc/environment \
     && source /etc/environment \
