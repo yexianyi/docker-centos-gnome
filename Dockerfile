@@ -14,8 +14,9 @@ RUN echo 'LANG="en_US.UTF-8"' >> /etc/environment \
     && sed -i 's/800x600/1920x1080/g' /usr/bin/vncserver \
     && sed -i 's/#$depth = 16/$depth = 32/g' /usr/bin/vncserver \
     && sh -c "yes 123456| vncpasswd" && echo "root:123456" | chpasswd
+COPY init.sh .
     
 EXPOSE 5901 5902 5903 5904 5905 5906
 VOLUME [ "/sys/fs/cgroup" ]
-ENTRYPOINT ["/usr/sbin/init"]
-CMD localedef -v -c -i en_US -f UTF-8 en_US.UTF-8 && systemctl daemon-reload && systemctl stop firewalld && systemctl start vncserver@:1.service
+ENTRYPOINT ["init.sh"]
+#CMD localedef -v -c -i en_US -f UTF-8 en_US.UTF-8 && systemctl daemon-reload && systemctl stop firewalld && systemctl start vncserver@:1.service
