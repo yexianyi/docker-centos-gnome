@@ -1,12 +1,13 @@
 FROM yexianyi/oracle-jdk:centos7
 
-ADD init.sh init.sh
+ADD init.sh /home
+WORKDIR /home
 RUN echo 'LANG="en_US.UTF-8"' >> /etc/environment \
     && echo 'LC_ALL=' >> /etc/environment \
     && source /etc/environment \
     && echo 'LANG="en_US.UTF-8"' >> /etc/sysconfig/i18n \
     && echo 'SYSFONT="latarcyrheb-sun16"' >> /etc/sysconfig/i18n \
-    && chmod +x init.sh \
+    && chmod +x /home/init.sh \
     #install gnome desktop
     && yum groupinstall "GNOME Desktop" "Graphical Administration Tools" -y \
     && yum -y install tigervnc-server \
@@ -19,5 +20,5 @@ RUN echo 'LANG="en_US.UTF-8"' >> /etc/environment \
     
 EXPOSE 5901 5902 5903 5904 5905 5906
 VOLUME [ "/sys/fs/cgroup" ]
-CMD ["init.sh"]
+CMD ["/home/init.sh"]
 #CMD localedef -v -c -i en_US -f UTF-8 en_US.UTF-8 && systemctl daemon-reload && systemctl stop firewalld && systemctl start vncserver@:1.service
