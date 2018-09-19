@@ -19,5 +19,5 @@ RUN echo 'LANG="en_US.UTF-8"' >> /etc/environment \
     
 EXPOSE 5901 5902 5903 5904 5905 5906
 VOLUME [ "/sys/fs/cgroup" ]
-ENTRYPOINT ["init.sh"]
+CMD ["init.sh"]
 #CMD localedef -v -c -i en_US -f UTF-8 en_US.UTF-8 && systemctl daemon-reload && systemctl stop firewalld && systemctl start vncserver@:1.service
